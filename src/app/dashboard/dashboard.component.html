@@ -1,0 +1,50 @@
+<div class="pf-c-page" id="dashboard">
+  <header class="pf-c-page__header">
+    <div class="pf-c-page__header-brand">
+      <div class="pf-c-page__header-brand-toggle">
+        <button class="pf-c-button pf-m-plain" type="button" aria-expanded="true" (click)="isSidebaseOpen = !isSidebaseOpen">
+          <i class="fas fa-bars" aria-hidden="true"></i>
+        </button>
+      </div>
+      <a class="pf-c-page__header-brand-link">
+        Open Practice Tool
+      </a>
+    </div>
+  </header>
+  <div class="pf-c-page__sidebar" *ngIf="isSidebaseOpen">
+    <div class="pf-c-page__sidebar-body">
+      <nav class="pf-c-nav" id="page-default-nav-example-primary-nav" aria-label="Global">
+        <ul class="pf-c-nav__list">
+          <li class="pf-c-nav__item" *ngFor="let page of pages">
+            <a [routerLink]="page.link" class="pf-c-nav__link">
+              <i class="fas pf-u-mr-sm" [ngClass]="'fa-' + page.icon" aria-hidden="true"></i>
+              {{ page.name }}
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <main class="pf-c-page__main" tabindex="-1">
+    <section class="pf-c-page__main-breadcrumb">
+      <app-breadcrumb></app-breadcrumb>
+    </section>
+    <section class="pf-c-page__main-section pf-m-light">
+      <router-outlet></router-outlet>
+    </section>
+    <section class="pf-c-page__main-section">
+      <div class="pf-c-content">
+        <div class="pf-l-level">
+          <div class="pf-l-level__item">
+            We are open, so if you want to contribute go to the <a>Github</a>.
+          </div>
+          <div class="pf-l-level__item">
+            <span class="made-by">
+              Made by <strong>Red Hat Open Innovation Labs Team</strong>.
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

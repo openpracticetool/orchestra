@@ -1,0 +1,27 @@
+#home {
+  .made-by {
+    font-size: 0.75em;
+  }
+  .practices {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 300px 300px;
+    grid-gap: 20px;
+
+    .pf-c-card {
+      width: 100%;
+      height: 100%;
+    }
+
+    .and-more {
+      background-color: rgb(134, 134, 134);
+      color: #fff;
+    }
+  }
+
+  @media (max-width: 660px) {
+    .practices {
+      grid-template-columns: auto;
+    }
+  }
+}
