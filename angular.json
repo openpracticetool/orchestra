@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "open-practice-tool": {
+    "orchestra": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/open-practice-tool",
+            "outputPath": "dist/orchestra",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -68,18 +68,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "open-practice-tool:build"
+            "browserTarget": "orchestra:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "open-practice-tool:build:production"
+              "browserTarget": "orchestra:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "open-practice-tool:build"
+            "browserTarget": "orchestra:build"
           }
         },
         "test": {
@@ -116,15 +116,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "open-practice-tool:serve"
+            "devServerTarget": "orchestra:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "open-practice-tool:serve:production"
+              "devServerTarget": "orchestra:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "open-practice-tool"
+  "defaultProject": "orchestra"
 }

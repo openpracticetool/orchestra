@@ -13,10 +13,12 @@ interface Page {
 })
 export class DashboardComponent implements OnInit {
 
-  public isSidebaseOpen = true;
-  public linkText = false;
+  public isSidebaseOpen = false;
   public pages: Page[] = [
     { link: '/dashboard', name: 'Home', icon: 'home' }
+  ];
+  public userItems = [
+    { name: 'Log out', link: '../home' }
   ];
 
   constructor() { }

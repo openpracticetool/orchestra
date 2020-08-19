@@ -1,0 +1,75 @@
+<section class="pf-c-page__main-section pf-m-light">
+  <div class="pf-c-content">
+    <h1>Add Session</h1>
+    <p *ngIf="isPracticeSelected">
+      Select a practice to create your new session.
+    </p>
+    <p *ngIf="!isPracticeSelected">
+      Fill the following form to continue.
+    </p>
+  </div>
+</section>
+<section class="pf-c-page__main-section" *ngIf="isPracticeSelected">
+  <div class="pf-c-content">
+    <div class="pf-l-gallery pf-m-gutter">
+      <div class="pf-l-gallery__item" *ngFor="let practice of practices">
+        <div class="pf-c-card pf-m-hoverable">
+          <div class="pf-c-card__header">
+            <div class="pf-c-card__header-main">
+              <h3>{{ practice.name }}</h3>
+            </div>
+          </div>
+          <div class="pf-c-card__body">
+            <p>{{ practice.description }}</p>
+          </div>
+          <div class="pf-c-card__footer">
+            <button class="pf-c-button pf-m-primary pf-m-small pf-u-mr-sm" type="button" (click)="setPractice(practice)">
+              Use it
+            </button>
+            <button class="pf-c-button pf-m-tertiary pf-m-small" type="button" (click)="moreInfo(practice.link)">
+              <span class="pf-c-button__icon pf-m-end">
+                <i class="fas fa-plus" aria-hidden="true"></i>
+              </span>
+              More info
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="pf-c-page__main-section pf-m-light" *ngIf="!isPracticeSelected">
+  <div class="pf-c-content">
+    <form novalidate class="pf-c-form" #f="ngForm">
+      <app-text-field
+        name="name"
+        title="Name"
+        required="true"
+        hint="Use an unique and descriptive name for your session."
+        [(ngModel)]="session.name"
+      ></app-text-field>
+      <div>
+        <h3>{{ session.pratice.name }}</h3>
+        <p>{{ session.pratice.description }}.</p>
+      </div>
+      <div class="pf-c-form__group">
+        <div class="pf-c-form__group-label">
+          <label class="pf-c-form__label" for="help-text-form-name">
+            <span class="pf-c-form__label-text">Votes per guest</span>
+            <span class="pf-c-form__label-required" aria-hidden="true">&#42;</span>
+          </label>
+        </div>
+        <div class="pf-c-form__group-control">
+          <input class="pf-c-form-control" required type="number" id="votes" name="votes" />
+          <p class="pf-c-form__helper-text" aria-live="polite">Number of votes per guest. We recomend 3 votes.</p>
+        </div>
+      </div>
+      <div class="pf-c-form__group pf-m-action">
+        <div class="pf-c-form__actions">
+          <button class="pf-c-button pf-m-primary" type="button">Create session</button>
+          <button class="pf-c-button pf-m-tertiary" type="button" (click)="setPractice(undefined)">Chage practice</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

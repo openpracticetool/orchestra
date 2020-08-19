@@ -1,0 +1,19 @@
+<div class="pf-c-form__group">
+  <div class="pf-c-form__group-label">
+    <label class="pf-c-form__label" [for]="name">
+      <span class="pf-c-form__label-text">{{ title }}</span>
+      <span class="pf-c-form__label-required" aria-hidden="true" *ngIf="required">&#42;</span>
+    </label>
+  </div>
+  <div class="pf-c-form__group-control">
+    <input class="pf-c-form-control" [required]="required" [type]="type" [id]="name" [name]="name" [(ngModel)]="value"
+      [attr.aria-invalid]="hasError ? true : false" [attr.aria-describedby]="name + hasError ? '-errors' : '-helper'"
+      [ngClass]="{ 'pf-m-success': isSuccess }" (blur)="onBlur()" (change)="changefn()" />
+    <p class="pf-c-form__helper-text" [id]="name + '-helper'" aria-live="polite" *ngIf="!hasError && hint">
+      {{ hint }}
+    </p>
+    <p class="pf-c-form__helper-text pf-m-error" [id]="name + '-errors'" aria-live="polite" *ngIf="hasError">
+      {{ hasError }}
+    </p>
+  </div>
+</div>

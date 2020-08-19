@@ -1,0 +1,12 @@
+<div class="pf-c-dropdown" [ngClass]="{ 'pf-m-expanded': isOpen }" (clickOutside)="isOpen = false">
+  <button class="pf-c-dropdown__toggle pf-m-plain" type="button" (click)="isOpen = !isOpen" [attr.aria-expanded]="isOpen">
+    <ng-content select="dropdown-button"></ng-content>
+  </button>
+  <ul class="pf-c-dropdown__menu" [hidden]="!isOpen">
+    <li *ngFor="let item of items" [ngClass]="{ 'pf-c-divider': item.isDivider }">
+      <a class="pf-c-dropdown__menu-item" *ngIf="!item.isDivider" (click)="doAction(item)">
+        {{ item.name }}
+      </a>
+    </li>
+  </ul>
+</div>
