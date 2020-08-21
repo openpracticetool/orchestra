@@ -14,6 +14,9 @@ export class User implements IUser {
 
   static parse(json: string): IUser {
     const user = JSON.parse(json);
-    return new User(user.email, user.password);
+    if (user) {
+      return new User(user.email, user.password);
+    }
+    return null;
   }
 }

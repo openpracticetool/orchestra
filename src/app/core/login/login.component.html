@@ -22,26 +22,35 @@
         <p class="pf-c-login__main-header-desc">To get access to your sessions and create new ones, please log in.</p>
       </header>
       <div class="pf-c-login__main-body">
-        <form novalidate class="pf-c-form" #loginForm="ngForm">
+        <form novalidate class="pf-c-form" [formGroup]="loginForm" (ngSubmit)="doLogin(loginForm.value)">
           <app-text-field
             name="email"
-            title="Email"
-            required="true"
-            [(ngModel)]="user.email"
-            #email="ngModel"
+            [formControl]="loginForm.controls['email']"
           >
+            Email
           </app-text-field>
           <app-text-field
             name="password"
             type="password"
-            title="Password"
-            required="true"
-            [(ngModel)]="user.password"
-            #password="ngModel"
+            [formControl]="loginForm.controls['password']"
           >
+            Password
           </app-text-field>
-          <div class="pf-c-form__group pf-m-action">
-            <button class="pf-c-button pf-m-primary pf-m-block" type="button" (click)="doLogin()">
+          <div class="pf-c-alert pf-m-danger" aria-label="Danger alert" *ngIf="errorMessage">
+            <div class="pf-c-alert__icon">
+              <i class="fas fa-fw fa-exclamation-circle" aria-hidden="true"></i>
+            </div>
+            <p class="pf-c-alert__title">
+              {{ errorMessage }}
+            </p>
+          </div>
+          <div class="pf-c-form__group pf-m-action pf-u-text-align-center">
+            <span class="pf-c-spinner pf-m-xl" role="progressbar" aria-valuetext="Loading..." *ngIf="submitting">
+              <span class="pf-c-spinner__clipper"></span>
+              <span class="pf-c-spinner__lead-ball"></span>
+              <span class="pf-c-spinner__tail-ball"></span>
+            </span>
+            <button class="pf-c-button pf-m-primary pf-m-block" type="submit" *ngIf="!submitting" [disabled]="loginForm.invalid">
               Log in
             </button>
           </div>
@@ -50,7 +59,9 @@
       <footer class="pf-c-login__main-footer">
         <div class="pf-c-login__main-footer-band">
           <p class="pf-c-login__main-footer-band-item">Need an account?
-            <a [routerLink]="['/register']">Sign up.</a>
+            <a [routerLink]="['/register']">
+              Sign up.
+            </a>
           </p>
           <!-- <p class="pf-c-login__main-footer-band-item">
             <a href="#">Forgot username or password?</a>
@@ -62,7 +73,7 @@
       <p>This is an open source tool where you can work collaboratively with your teammates, please get involved with us to improve your experience giving feedback.</p>
       <ul class="pf-c-list pf-m-inline">
         <li>
-          <a class="pf-c-button pf-m-plain" type="button" aria-label="Remove" href="#">
+          <a class="pf-c-button pf-m-plain" type="button" aria-label="Remove" href="https://github.com/openpracticetool">
             <i class="fab fa-github" aria-hidden="true"></i>
             Github
           </a>

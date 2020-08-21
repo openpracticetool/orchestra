@@ -3,6 +3,7 @@ import { Practice } from '../../models/practice';
 import { Session } from 'src/app/models/session';
 import { SessionService } from 'src/app/services/session.service';
 import { PracticeService } from 'src/app/services/practice.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-session',
@@ -11,16 +12,17 @@ import { PracticeService } from 'src/app/services/practice.service';
 })
 export class AddSessionComponent implements OnInit {
 
-  public practices: Practice[];
-  public session: Session;
+  practices: Practice[];
+  addSessionForm = new FormGroup({
+    name: new FormControl('', [
+      Validators.required
+    ])
+  });
+  selectedPractice: Practice = undefined;
 
-  constructor(private sessionService: SessionService, private practiceService: PracticeService) {
-    this.session = {
-      name: '',
-      pratice: undefined,
-      date: ''
-    };
-  }
+  constructor(
+    private practiceService: PracticeService
+  ) { }
 
   ngOnInit(): void {
     this.practiceService.getPractices()
@@ -28,11 +30,11 @@ export class AddSessionComponent implements OnInit {
   }
 
   get isPracticeSelected(): boolean {
-    return this.session.pratice === undefined;
+    return this.selectedPractice === undefined;
   }
 
-  public setPractice(practiceName: Practice): void {
-    this.session.pratice = practiceName;
+  public setPractice(practice: Practice): void {
+    this.selectedPractice = practice;
   }
 
   public moreInfo(link): void {

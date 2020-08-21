@@ -13,15 +13,13 @@ import {
   UrlSerializer
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { UserService } from 'src/app/services/user.service';
-import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<unknown>, CanLoad {
 
-  constructor(private router: Router, private userService: UserService) { }
+  constructor(private router: Router) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,

@@ -4,9 +4,6 @@
     <p *ngIf="isPracticeSelected">
       Select a practice to create your new session.
     </p>
-    <p *ngIf="!isPracticeSelected">
-      Fill the following form to continue.
-    </p>
   </div>
 </section>
 <section class="pf-c-page__main-section" *ngIf="isPracticeSelected">
@@ -40,34 +37,26 @@
 </section>
 <section class="pf-c-page__main-section pf-m-light" *ngIf="!isPracticeSelected">
   <div class="pf-c-content">
-    <form novalidate class="pf-c-form" #f="ngForm">
+    <form novalidate class="pf-c-form" [formGroup]="addSessionForm">
+      <div>
+        <h3>Your have selected: {{ selectedPractice.name }}</h3>
+        <p>{{ selectedPractice.description }}.</p>
+      </div>
       <app-text-field
         name="name"
-        title="Name"
-        required="true"
         hint="Use an unique and descriptive name for your session."
-        [(ngModel)]="session.name"
-      ></app-text-field>
-      <div>
-        <h3>{{ session.pratice.name }}</h3>
-        <p>{{ session.pratice.description }}.</p>
-      </div>
-      <div class="pf-c-form__group">
-        <div class="pf-c-form__group-label">
-          <label class="pf-c-form__label" for="help-text-form-name">
-            <span class="pf-c-form__label-text">Votes per guest</span>
-            <span class="pf-c-form__label-required" aria-hidden="true">&#42;</span>
-          </label>
-        </div>
-        <div class="pf-c-form__group-control">
-          <input class="pf-c-form-control" required type="number" id="votes" name="votes" />
-          <p class="pf-c-form__helper-text" aria-live="polite">Number of votes per guest. We recomend 3 votes.</p>
-        </div>
-      </div>
+        [formControl]="addSessionForm.controls['name']"
+      >
+        Name
+      </app-text-field>
       <div class="pf-c-form__group pf-m-action">
         <div class="pf-c-form__actions">
-          <button class="pf-c-button pf-m-primary" type="button">Create session</button>
-          <button class="pf-c-button pf-m-tertiary" type="button" (click)="setPractice(undefined)">Chage practice</button>
+          <button class="pf-c-button pf-m-primary" type="button" [disabled]="addSessionForm.invalid">
+            Create session
+          </button>
+          <button class="pf-c-button pf-m-tertiary" type="button" (click)="setPractice(undefined)">
+            Chage practice
+          </button>
         </div>
       </div>
     </form>

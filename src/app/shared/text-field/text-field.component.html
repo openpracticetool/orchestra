@@ -1,19 +1,31 @@
 <div class="pf-c-form__group">
   <div class="pf-c-form__group-label">
     <label class="pf-c-form__label" [for]="name">
-      <span class="pf-c-form__label-text">{{ title }}</span>
-      <span class="pf-c-form__label-required" aria-hidden="true" *ngIf="required">&#42;</span>
+      <span class="pf-c-form__label-text">
+        <ng-content></ng-content>
+      </span>
+      <span class="pf-c-form__label-required" aria-hidden="true" *ngIf="ngControl.control.hasError('required')">
+        &#42;
+      </span>
     </label>
   </div>
   <div class="pf-c-form__group-control">
-    <input class="pf-c-form-control" [required]="required" [type]="type" [id]="name" [name]="name" [(ngModel)]="value"
-      [attr.aria-invalid]="hasError ? true : false" [attr.aria-describedby]="name + hasError ? '-errors' : '-helper'"
-      [ngClass]="{ 'pf-m-success': isSuccess }" (blur)="onBlur()" (change)="changefn()" />
-    <p class="pf-c-form__helper-text" [id]="name + '-helper'" aria-live="polite" *ngIf="!hasError && hint">
+    <input
+      class="pf-c-form-control"
+      [required]="ngControl.control.hasError('required')"
+      [type]="type"
+      [id]="name"
+      [name]="name"
+      [formControl]="ngControl.control"
+      [attr.aria-invalid]="isInvalid ? true : false"
+      [attr.aria-describedby]="name + (isInvalid ? '-errors' : '-helper')"
+      [ngClass]="{ 'pf-m-success': isSuccess }"
+    />
+    <p class="pf-c-form__helper-text" [id]="name + '-helper'" aria-live="polite" *ngIf="!isInvalid && hint">
       {{ hint }}
     </p>
-    <p class="pf-c-form__helper-text pf-m-error" [id]="name + '-errors'" aria-live="polite" *ngIf="hasError">
-      {{ hasError }}
+    <p class="pf-c-form__helper-text pf-m-error" [id]="name + '-errors'" aria-live="polite" *ngIf="isInvalid">
+      {{ errorMessage }}
     </p>
   </div>
 </div>

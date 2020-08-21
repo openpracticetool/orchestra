@@ -13,15 +13,20 @@ export class UserService {
     this.user = User.parse(localStorage.getItem('user'));
   }
 
-  doLogin(): boolean {
-    return this.user.email === 'tes@test.com' && this.user.password === '123';
+  public static doLogout(): void {
+    localStorage.removeItem('user');
   }
 
-  getUser(): Observable<IUser> {
+  public doLogin(): boolean {
+    // TODO: Integrate with SSO to do Login
+    return this.user.email === 'test@test.com' && this.user.password === '123456';
+  }
+
+  public get getUser(): Observable<IUser> {
     return of(this.user);
   }
 
-  setUser(user: IUser): void {
+  public set setUser(user: IUser) {
     localStorage.setItem('user', JSON.stringify(user));
     this.user = user;
   }

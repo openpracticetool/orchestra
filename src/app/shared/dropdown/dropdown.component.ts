@@ -6,7 +6,7 @@ export interface Item {
   isDivider?: boolean;
   isButton?: boolean;
   link?: string;
-  action?(): any;
+  action?: any;
 }
 
 @Component({

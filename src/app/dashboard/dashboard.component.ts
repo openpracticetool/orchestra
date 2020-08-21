@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 interface Page {
   link: string;
@@ -18,12 +20,17 @@ export class DashboardComponent implements OnInit {
     { link: '/dashboard', name: 'Home', icon: 'home' }
   ];
   public userItems = [
-    { name: 'Log out', link: '../home' }
+    {
+      name: 'Log out',
+      isButton: true,
+      action: () => {
+        UserService.doLogout();
+        this.router.navigate(['/home']);
+      }
+    }
   ];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void { }
 }
