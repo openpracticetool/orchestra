@@ -30,4 +30,8 @@ export class UserService {
     localStorage.setItem('user', JSON.stringify(user));
     this.user = user;
   }
+
+  public get isLoggedin(): boolean {
+    return this.user ? true : false;
+  }
 }

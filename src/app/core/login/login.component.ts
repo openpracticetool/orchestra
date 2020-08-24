@@ -33,15 +33,13 @@ export class LoginComponent implements OnInit {
     this.submitting = true;
     this.loginForm.disable();
     this.errorMessage = null;
-    setInterval(() => {
-      this.userService.setUser = user;
-      if (this.userService.doLogin()) {
-        this.router.navigate(['dashboard']);
-      } else {
-        this.submitting = false;
-        this.loginForm.enable();
-        this.errorMessage = 'Invalid user/password.';
-      }
-    }, 3000);
+    this.userService.setUser = user;
+    if (this.userService.doLogin()) {
+      this.router.navigate(['dashboard']);
+    } else {
+      this.submitting = false;
+      this.loginForm.enable();
+      this.errorMessage = 'Invalid user/password.';
+    }
   }
 }

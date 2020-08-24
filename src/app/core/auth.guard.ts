@@ -13,34 +13,26 @@ import {
   UrlSerializer
 } from '@angular/router';
 import { Observable } from 'rxjs';
+import { UserService } from '../services/user.service';
+import { IUser } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<unknown>, CanLoad {
+export class AuthGuard implements CanActivateChild {
 
-  constructor(private router: Router) { }
+  user: IUser;
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
-  }
+  constructor(private router: Router, private userService: UserService) { }
+
   canActivateChild(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
-  }
-  canDeactivate(
-    component: unknown,
-    currentRoute: ActivatedRouteSnapshot,
-    currentState: RouterStateSnapshot,
-    nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
-  }
-  canLoad(
-    route: Route,
-    segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    console.log(this.userService.isLoggedin);
+    if (!this.userService.isLoggedin) {
+      return this.router.parseUrl('/login?mid=notautorized');
+    }
     return true;
   }
 }
