@@ -34,12 +34,17 @@ export class LoginComponent implements OnInit {
     this.loginForm.disable();
     this.errorMessage = null;
     this.userService.setUser = user;
-    if (this.userService.doLogin()) {
-      this.router.navigate(['dashboard']);
-    } else {
-      this.submitting = false;
-      this.loginForm.enable();
-      this.errorMessage = 'Invalid user/password.';
-    }
+    this.userService.doLogin().subscribe(
+      result => {
+        console.log(result);
+        this.router.navigate(['dashboard']);
+      },
+      error => {
+        console.error(error);
+        this.submitting = false;
+        this.loginForm.enable();
+        this.errorMessage = error.error.error_description;
+      }
+    );
   }
 }

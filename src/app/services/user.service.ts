@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IUser, User } from '../models/user';
 import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class UserService {
 
   private user: IUser;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.user = User.parse(localStorage.getItem('user'));
   }
 
@@ -17,9 +18,23 @@ export class UserService {
     localStorage.removeItem('user');
   }
 
-  public doLogin(): boolean {
-    // TODO: Integrate with SSO to do Login
-    return this.user.email === 'test@test.com' && this.user.password === '123456';
+  public doLogin(): Observable<any> {
+    const payload = new HttpParams()
+      .set('username', this.user.email)
+      .set('password', this.user.password)
+      .set('client_id', 'orchestra')
+      .set('client_secret', 'f6c891c5-130a-4dc9-b926-8132be9fa6a8')
+      .set('grant_type', 'password')
+      .set('scope', 'openid');
+
+    return this.http.post(
+      'https://sso-opt-dev.apps.s45.core.rht-labs.com/auth/realms/open-practice-tool/protocol/openid-connect/token',
+      payload,
+      {
+        headers: new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+      }
+    );
   }
 
   public get getUser(): Observable<IUser> {
