@@ -7,6 +7,8 @@ import { CoreRoutingModule } from './core-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from 'src/app/core/auth.guard';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpInterceptorInterceptor } from 'src/app/core/http-interceptor.interceptor';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent],
@@ -18,7 +20,12 @@ import { AuthGuard } from 'src/app/core/auth.guard';
     ReactiveFormsModule
   ],
   providers: [
-    AuthGuard
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorInterceptor,
+      multi: true
+    }
   ],
   exports: [
     CoreRoutingModule
