@@ -39,7 +39,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "with": "src/environments/environment.deploy.ts"
                 }
               ],
               "optimization": true,
@@ -71,8 +71,8 @@
             "browserTarget": "orchestra:build"
           },
           "configurations": {
-            "production": {
-              "browserTarget": "orchestra:build:production"
+            "deploy": {
+              "browserTarget": "orchestra:build:deploy"
             }
           }
         },
@@ -119,8 +119,8 @@
             "devServerTarget": "orchestra:serve"
           },
           "configurations": {
-            "production": {
-              "devServerTarget": "orchestra:serve:production"
+            "deploy": {
+              "devServerTarget": "orchestra:serve:deploy"
             }
           }
         }
