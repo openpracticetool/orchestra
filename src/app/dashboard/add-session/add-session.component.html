@@ -51,10 +51,15 @@
       </app-text-field>
       <div class="pf-c-form__group pf-m-action">
         <div class="pf-c-form__actions">
-          <button class="pf-c-button pf-m-primary" type="button" [disabled]="addSessionForm.invalid">
+          <span class="pf-c-spinner pf-m-lg" role="progressbar" aria-valuetext="Loading..." *ngIf="addSessionForm.disabled">
+            <span class="pf-c-spinner__clipper"></span>
+            <span class="pf-c-spinner__lead-ball"></span>
+            <span class="pf-c-spinner__tail-ball"></span>
+          </span>
+          <button class="pf-c-button pf-m-primary" type="button" *ngIf="!addSessionForm.disabled" [disabled]="addSessionForm.invalid" (click)="createSesion()">
             Create session
           </button>
-          <button class="pf-c-button pf-m-tertiary" type="button" (click)="setPractice(undefined)">
+          <button class="pf-c-button pf-m-tertiary" type="button" *ngIf="!addSessionForm.disabled" (click)="setPractice(undefined)">
             Chage practice
           </button>
         </div>

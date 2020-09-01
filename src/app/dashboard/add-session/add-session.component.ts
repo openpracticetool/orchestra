@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Practice } from '../../models/practice';
-import { Session } from 'src/app/models/session';
+import { IPractice } from '../../models/practice';
+import { ISession } from 'src/app/models/session';
 import { SessionService } from 'src/app/services/session.service';
 import { PracticeService } from 'src/app/services/practice.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-session',
@@ -12,16 +13,19 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class AddSessionComponent implements OnInit {
 
-  practices: Practice[];
+  submiting = false;
+  practices: IPractice[];
   addSessionForm = new FormGroup({
     name: new FormControl('', [
       Validators.required
     ])
   });
-  selectedPractice: Practice = undefined;
+  selectedPractice: IPractice = undefined;
 
   constructor(
-    private practiceService: PracticeService
+    private router: Router,
+    private practiceService: PracticeService,
+    private sessionService: SessionService
   ) { }
 
   ngOnInit(): void {
@@ -33,11 +37,28 @@ export class AddSessionComponent implements OnInit {
     return this.selectedPractice === undefined;
   }
 
-  public setPractice(practice: Practice): void {
+  public setPractice(practice: IPractice): void {
     this.selectedPractice = practice;
   }
 
   public moreInfo(link): void {
     window.open(`https://openpracticelibrary.com/practice/${link}`, '_blank');
+  }
+
+  createSesion(): void {
+    this.addSessionForm.disable();
+    this.sessionService.createSession({
+      ...this.addSessionForm.value,
+      pratice: this.selectedPractice
+    })
+      .subscribe(
+        () => {
+          this.addSessionForm.enable();
+          this.router.navigate(['dashboard']);
+        },
+        error => {
+          this.addSessionForm.enable();
+        }
+      );
   }
 }
