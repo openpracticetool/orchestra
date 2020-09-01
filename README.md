@@ -22,6 +22,37 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
+## Deploy on Openshift
+
+Follow this instruction to generate an Orchestra deploy on Openshift:
+
+1. Log in on Openshift:
+
+   ```bash
+   $ oc login
+   ```
+
+2. Create binary build:
+
+   ```bash
+   $ oc new-build -i openshift/nginx --binary --name=orchestra --to=opt-dev/orchestra
+   ```
+
+3. Start a build:
+
+   ```bash
+   $ npm run build
+   $ cp nginx.conf dist/orchestra/
+   $ oc start-build orchestra --from-dir=./dist/orchestra
+   ```
+
+4. Finally, deploy the generated image:
+
+   ```bash
+   $ oc new-app orchestra --name orchestra
+   $ oc expose service orchestra --port=8080
+   ```
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
