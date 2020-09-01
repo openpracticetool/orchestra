@@ -16,7 +16,7 @@
           <app-dropdown [items]="userItems">
             <dropdown-button>
               <span class="pf-c-dropdown__toggle-text">
-                John Smith
+                {{ user ? user.name || user.email : 'Loading ...' }}
               </span>
               <span class="pf-c-dropdown__toggle-icon">
                 <i class="fas fa-caret-down" aria-hidden="true"></i>

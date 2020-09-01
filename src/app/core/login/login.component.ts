@@ -11,7 +11,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  submitting = false;
+  user: IUser;
   errorMessage: string;
   loginForm = new FormGroup({
     email: new FormControl('', [
@@ -27,24 +27,30 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router, private userService: UserService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.userService.getUser()
+      .subscribe(user => this.user = user);
+  }
 
   public doLogin(user: IUser): void {
-    this.submitting = true;
     this.loginForm.disable();
     this.errorMessage = null;
-    this.userService.setUser = user;
-    this.userService.doLogin().subscribe(
+    this.userService.doLogin(user).subscribe(
       result => {
-        console.log(result);
         this.router.navigate(['dashboard']);
       },
       error => {
-        console.error(error);
-        this.submitting = false;
         this.loginForm.enable();
         this.errorMessage = error.error.error_description;
       }
     );
+  }
+
+  isLogged(): boolean {
+    return this.userService.isLoggedin;
+  }
+
+  logout(): void {
+    this.userService.doLogout();
   }
 }

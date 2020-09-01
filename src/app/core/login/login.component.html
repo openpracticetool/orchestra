@@ -17,12 +17,16 @@
       Open Practice Tool
     </header>
     <main class="pf-c-login__main">
-      <header class="pf-c-login__main-header">
+      <header class="pf-c-login__main-header" *ngIf="!isLogged()">
         <h1 class="pf-c-title pf-m-3xl">Log in to your account</h1>
         <p class="pf-c-login__main-header-desc">To get access to your sessions and create new ones, please log in.</p>
       </header>
+      <header class="pf-c-login__main-header" *ngIf="isLogged()">
+        <h1 class="pf-c-title pf-m-3xl">You are already in</h1>
+        <p class="pf-c-login__main-header-desc">You are logged in with the following account:</p>
+      </header>
       <div class="pf-c-login__main-body">
-        <form novalidate class="pf-c-form" [formGroup]="loginForm" (ngSubmit)="doLogin(loginForm.value)">
+        <form novalidate class="pf-c-form" [formGroup]="loginForm" (ngSubmit)="doLogin(loginForm.value)" *ngIf="!isLogged()">
           <app-text-field
             name="email"
             [formControl]="loginForm.controls['email']"
@@ -45,16 +49,25 @@
             </p>
           </div>
           <div class="pf-c-form__group pf-m-action pf-u-text-align-center">
-            <span class="pf-c-spinner pf-m-xl" role="progressbar" aria-valuetext="Loading..." *ngIf="submitting">
+            <span class="pf-c-spinner pf-m-xl" role="progressbar" aria-valuetext="Loading..." *ngIf="loginForm.disabled">
               <span class="pf-c-spinner__clipper"></span>
               <span class="pf-c-spinner__lead-ball"></span>
               <span class="pf-c-spinner__tail-ball"></span>
             </span>
-            <button class="pf-c-button pf-m-primary pf-m-block" type="submit" *ngIf="!submitting" [disabled]="loginForm.invalid">
+            <button class="pf-c-button pf-m-primary pf-m-block" type="submit" *ngIf="!loginForm.disabled" [disabled]="loginForm.invalid">
               Log in
             </button>
           </div>
         </form>
+        <div *ngIf="isLogged()" class="pf-u-text-align-center">
+          <span class="pf-u-display-block pf-u-p-lg">{{ user ? user.name || user.email : 'loading ...' }}</span>
+          <button class="pf-c-button pf-m-primary pf-m-block pf-u-mb-md" type="button" routerLink="../dashboard">
+            Go to my workspace
+          </button>
+          <button class="pf-c-button pf-m-danger pf-m-block" type="button" (click)="logout()">
+            Log in with another account
+          </button>
+        </div>
       </div>
       <footer class="pf-c-login__main-footer">
         <div class="pf-c-login__main-footer-band">

@@ -14,14 +14,11 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserService } from '../services/user.service';
-import { IUser } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivateChild {
-
-  user: IUser;
 
   constructor(private router: Router, private userService: UserService) { }
 

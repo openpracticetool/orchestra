@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Session } from '../../models/session';
+import { ISession } from '../../models/session';
 import { SessionService } from '../../services/session.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { SessionService } from '../../services/session.service';
 })
 export class HomeComponent implements OnInit {
 
-  public sessions: Session[];
+  public sessions: ISession[];
 
   constructor(private sessionService: SessionService) { }
 

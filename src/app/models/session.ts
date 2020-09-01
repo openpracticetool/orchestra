@@ -1,7 +1,7 @@
-import { Practice } from './practice';
+import { IPractice } from './practice';
 
-export interface Session {
+export interface ISession {
   name: string;
   date: string;
-  pratice: Practice;
+  pratice: IPractice;
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Practice } from '../models/practice';
+import { IPractice } from '../models/practice';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -7,7 +7,7 @@ import { Observable, of } from 'rxjs';
 })
 export class PracticeService {
 
-  practices: Practice[];
+  practices: IPractice[];
 
   constructor() {
     this.practices = [
@@ -15,7 +15,7 @@ export class PracticeService {
     ];
   }
 
-  getPractices(): Observable<Practice[]> {
+  getPractices(): Observable<IPractice[]> {
     return of(this.practices);
   }
 }

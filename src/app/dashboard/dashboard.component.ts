@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { IUser } from '../models/user';
+import { Observable } from 'rxjs';
 
 interface Page {
   link: string;
@@ -15,6 +17,7 @@ interface Page {
 })
 export class DashboardComponent implements OnInit {
 
+  public user: IUser;
   public isSidebaseOpen = false;
   public pages: Page[] = [
     { link: '/dashboard', name: 'Home', icon: 'home' }
@@ -24,13 +27,16 @@ export class DashboardComponent implements OnInit {
       name: 'Log out',
       isButton: true,
       action: () => {
-        UserService.doLogout();
+        this.userService.doLogout();
         this.router.navigate(['/home']);
       }
     }
   ];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private userService: UserService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.userService.getUser()
+      .subscribe(user => this.user = user);
+  }
 }
