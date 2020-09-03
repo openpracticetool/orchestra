@@ -1,4 +1,10 @@
 #home {
+  background-color: rgb(247, 247, 247);
+
+  .pf-c-page__header-brand-link {
+    font-size: 1.5em;
+  }
+
   .made-by {
     font-size: 0.75em;
   }
@@ -16,6 +22,12 @@
     .and-more {
       background-color: rgb(134, 134, 134);
       color: #fff;
+    }
+  }
+
+  .pf-c-empty-state__content {
+    img {
+      max-height: 415px;
     }
   }
 
